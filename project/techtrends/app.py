@@ -5,8 +5,21 @@ from flask import Flask, jsonify, json, render_template, request, url_for, redir
 from werkzeug.exceptions import abort
 
 get_db_connection_counter = 0
+
+# Set logging stream handler
+stdoutHandler = logging.StreamHandler(stream=sys.stdout)
+stdoutHandler.setLevel(logging.DEBUG)
+stderrHandler = logging.StreamHandler(stream=sys.stderr)
+stderrHandler.setLevel(logging.ERROR)
+
+# Configure logs
 FORMAT = '%(asctime)-15s %(message)s'
-logging.basicConfig(format=FORMAT)
+logging.basicConfig(
+    format=FORMAT,
+    level=logging.DEBUG,
+    handlers=[stdoutHandler, stderrHandler],
+    datefmt=("%m/%d/%Y, %H:%M:%S"),
+)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
